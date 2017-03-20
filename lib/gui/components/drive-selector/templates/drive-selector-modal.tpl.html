@@ -16,7 +16,7 @@
           <footer class="list-group-item-footer">
 
             <span class="label label-warning"
-                ng-show="modal.constraints.isDriveLargeEnough(drive, modal.state.getImage()) && !modal.constraints.isDriveLocked(drive) && !modal.constraints.isDriveSizeRecommended(drive, modal.state.getImage())">
+              ng-show="modal.constraints.isDriveLargeEnough(drive, modal.state.getImage()) && !modal.constraints.isDriveLocked(drive) && !modal.constraints.isDriveSizeRecommended(drive, modal.state.getImage()) && !modal.constraints.isSourceDrive(drive, modal.state.getImage())">
                 <i class="glyphicon glyphicon-warning-sign"></i>
                 Not Recommended</span>
 
@@ -24,19 +24,20 @@
             <!-- Since in this case both labels will be displayed, we chose to only show the -->
             <!-- "not large enough label", since from the point of view of the user, the locked -->
             <!-- state is irrelevant if the drive is not large enough anyway. -->
+            <!-- Ditto for the source drive label. -->
 
             <span class="label label-danger"
-              ng-hide="modal.constraints.isDriveLargeEnough(drive, modal.state.getImage())">
+              ng-hide="modal.constraints.isDriveLargeEnough(drive, modal.state.getImage()) || modal.constraints.isSourceDrive(drive, modal.state.getImage())">
                 <i class="glyphicon glyphicon-resize-small"></i>
                 Too Small For Image</span>
 
             <span class="label label-danger"
-              ng-show="modal.constraints.isDriveLocked(drive) && modal.constraints.isDriveLargeEnough(drive, modal.state.getImage())">
+              ng-show="modal.constraints.isDriveLocked(drive) && modal.constraints.isDriveLargeEnough(drive, modal.state.getImage()) && !modal.constraints.isSourceDrive(drive, modal.state.getImage())">
                 <i class="glyphicon glyphicon-lock"></i>
                 Locked</span>
 
             <span class="label label-danger"
-              ng-show="modal.constraints.isSystemDrive(drive)">
+              ng-show="modal.constraints.isSystemDrive(drive) && !modal.constraints.isSourceDrive(drive, modal.state.getImage())">
                 <i class="glyphicon glyphicon-hdd"></i>
                 System Drive</span>
 
